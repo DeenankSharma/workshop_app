@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Messaging App</title>
+    <title>ShoutBoard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     
-    <h1 class="heading">Messaging App</h1>
-    
+    <h1 class="heading">ShoutBoard</h1>
+    <main>
     <div class="container">
         <form method="post" action="/add">
             <div class="form-content">
                 <input class="username" type="text" name="username" placeholder="Your name" required />
                 <textarea autocomplete="off" type="text" name="message" placeholder="Write your message here..." required></textarea>
-                <button type="submit">Post Message</button>
+                
+                    <button type="submit">Post Shout</button>
+                
             </div>
+            <a class="shoutboard" href="{{ url_for('read') }}">View Shout Board</a>
+
         </form>
-        <a href="{{ url_for('read') }}">Go to Read Messages</a>
         
     </div>
-
+</main>
 </body>
 </html>
