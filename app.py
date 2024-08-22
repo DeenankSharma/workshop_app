@@ -8,7 +8,7 @@ app = Flask(__name__)
 def create_database():
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, task TEXT)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, task TEXT,username TEXT NOT NULL)''')
     conn.commit()
     conn.close()
 
@@ -23,12 +23,22 @@ def index():
     conn.close()
     return render_template('index.html', tasks=tasks)
 
+@app.route('/read')
+def read():
+    conn = sqlite3.connect('todo.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM tasks')
+    tasks = c.fetchall()
+    conn.close()
+    return render_template('read.html', tasks=tasks)
+
 @app.route('/add', methods=['POST'])
 def add_task():
     task = request.form['task']
+    username = request.form['username']
     conn = sqlite3.connect('todo.db')
     c = conn.cursor()
-    c.execute('INSERT INTO tasks (task) VALUES (?)', (task,))
+    c.execute('INSERT INTO tasks (task, username) VALUES (?,?)', (task,username))
     conn.commit()
     conn.close()
     return redirect(url_for('index'))

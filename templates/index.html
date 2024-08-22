@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ToDo List</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <title>Messaging App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>ToDo List</h1>
-    <form method="post" action="/add">
-        <input autocomplete="off" type="text" name="task" placeholder="Add a task" required>
-        <button type="submit">Add</button>
-    </form>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task[1] }}
-                <a href="/delete/{{ task[0] }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+    
+    <h1 class="heading">Messaging App</h1>
+    
+    <div class="container">
+        <form method="post" action="/add">
+            <div class="form-content">
+                <input class="username" type="text" name="username" placeholder="Your name" required />
+                <textarea autocomplete="off" type="text" name="task" placeholder="Write your message here..." required></textarea>
+                <button type="submit">Post Message</button>
+            </div>
+        </form>
+        <a href="{{ url_for('read') }}">Go to Read Messages</a>
+        
+    </div>
+
 </body>
 </html>

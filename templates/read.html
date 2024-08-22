@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Read Messages</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 class="heading">Messages</h1>
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <strong>{{ task[2] }}:</strong> {{ task[1] }}
+                    <a href="/delete/{{ task[0] }}">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Go to Post a Message</a>
+    </div>
+</body>
+</html>
