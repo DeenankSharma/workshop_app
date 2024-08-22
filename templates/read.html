@@ -8,12 +8,16 @@
     <div class="container">
         <h1 class="heading">Messages</h1>
         <ul>
-            {% for task in tasks %}
+            {% if messages %}
+            {% for message in messages %}
                 <li>
-                    <strong>{{ task[2] }}:</strong> {{ task[1] }}
-                    <a href="/delete/{{ task[0] }}">Delete</a>
+                    <strong>{{ message[2] }}:</strong> {{ message[1] }}
+                    <a href="/delete/{{ message[0] }}">Delete</a>
                 </li>
             {% endfor %}
+            {% else %}
+                <li>No messages yet</li>
+            {% endif %}
         </ul>
         <a href="{{ url_for('index') }}">Go to Post a Message</a>
     </div>
