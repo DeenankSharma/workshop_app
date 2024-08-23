@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,jsonify
 import sqlite3
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 
 
 def create_database():
@@ -14,14 +15,14 @@ def create_database():
 
 
 
-@app.route('/')
-def index():
-    conn = sqlite3.connect('message.db')
-    c = conn.cursor()
-    c.execute('SELECT * FROM messages')
-    tasks = c.fetchall()
-    conn.close()
-    return render_template('index.html', tasks=tasks)
+# @app.route('/')
+# def index():
+#     conn = sqlite3.connect('message.db')
+#     c = conn.cursor()
+#     c.execute('SELECT * FROM messages')
+#     tasks = c.fetchall()
+#     conn.close()
+#     return render_template('index.html', tasks=tasks)
 
 @app.route('/read')
 def read():
@@ -30,27 +31,28 @@ def read():
     c.execute('SELECT * FROM messages')
     messages = c.fetchall()
     conn.close()
-    return render_template('read.html', messages=messages)
+    return jsonify({"status":"status","messages":messages})
 
 @app.route('/add', methods=['POST'])
 def add_task():
-    message = request.form['message']
-    username = request.form['username']
+    data=request.json
+    message = data.get('message')
+    username = data.get('username')
     conn = sqlite3.connect('message.db')
     c = conn.cursor()
     c.execute('INSERT INTO messages (message, username) VALUES (?,?)', (message,username))
     conn.commit()
     conn.close()
-    return redirect(url_for('index'))
+    return jsonify({"status": "success", "message": "Data received"}), 200
 
-@app.route('/delete/<int:message_id>')
-def delete_task(message_id):
-    conn = sqlite3.connect('message.db')
-    c = conn.cursor()
-    c.execute('DELETE FROM messages WHERE id = ?', (message_id,))
-    conn.commit()
-    conn.close()
-    return redirect(url_for('index'))
+# @app.route('/delete/<int:message_id>')
+# def delete_task(message_id):
+#     conn = sqlite3.connect('message.db')
+#     c = conn.cursor()
+#     c.execute('DELETE FROM messages WHERE id = ?', (message_id,))
+#     conn.commit()
+#     conn.close()
+#     return redirect(url_for('index'))
 
 if __name__ == '__main__':
     create_database()
