@@ -1,2 +1,3 @@
 venv
 message.db
+__pycache__
