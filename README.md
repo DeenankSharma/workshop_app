@@ -66,7 +66,7 @@ Navigate to the backend directory and install Flask along with any other necessa
 
 ```bash
 cd backend
-pip install flask
+pip install -r requirements.txt
 ```
 
 ### 6. Run the backend
