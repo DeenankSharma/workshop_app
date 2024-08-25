@@ -74,7 +74,7 @@ pip install -r requirements.txt
 To start the Flask development server, use the following command within the backend directory:
 
 ```bash
-python app.py
+python main.py
 ```
 
 The backend will be accessible locally at http://127.0.0.1:5000. 
